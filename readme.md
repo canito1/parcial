@@ -114,8 +114,6 @@ Esta API RESTful está diseñada para registrar, consultar, actualizar y elimina
 ## Pruebas funcionales
 
 - Usar Postman para verificar todos los endpoints CRUD.
-- Incluir casos de prueba para: creación, actualización, consulta, eliminación y errores de validación.
-- Documentar ejemplos de peticiones y respuestas.
 
 ## Notas finales
 

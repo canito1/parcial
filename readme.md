@@ -80,8 +80,7 @@ Esta API RESTful está diseñada para registrar, consultar, actualizar y elimina
 {
   "titulo": "Problema de conexión VPN",
   "descripcion": "El cliente no puede conectarse a la VPN desde su equipo.",
-  "clienteId": 1,
-  "tecnicoId": 2,
+  "clienteId": 1,  
   "estado": "NUEVA"
 }
 ```

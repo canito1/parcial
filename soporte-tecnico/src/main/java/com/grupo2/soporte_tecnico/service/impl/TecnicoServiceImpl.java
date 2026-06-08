@@ -4,6 +4,7 @@ import com.grupo2.soporte_tecnico.exception.RecursoNoEncontradoException;
 import com.grupo2.soporte_tecnico.model.Tecnico;
 import com.grupo2.soporte_tecnico.repository.TecnicoRepository;
 import com.grupo2.soporte_tecnico.service.TecnicoService;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -16,11 +17,14 @@ public class TecnicoServiceImpl implements TecnicoService {
         this.tecnicoRepository = tecnicoRepository;
     }
 
-    @Override public List<Tecnico> listarTodos()        { return tecnicoRepository.findAll(); }
-    @Override public List<Tecnico> listarDisponibles()  { return tecnicoRepository.findDisponibles(); }
+    @Override
+    public List<Tecnico> listarTodos() { return tecnicoRepository.findAll(); }
 
     @Override
-    public Tecnico obtenerPorId(Long id) {
+    public List<Tecnico> listarDisponibles() { return tecnicoRepository.findByDisponibleTrue(); }
+
+    @Override
+    public Tecnico obtenerPorId(@NonNull Long id) {
         return tecnicoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "Técnico no encontrado con ID: " + id));
@@ -33,7 +37,7 @@ public class TecnicoServiceImpl implements TecnicoService {
     }
 
     @Override
-    public Tecnico actualizar(Long id, Tecnico datos) {
+    public Tecnico actualizar(@NonNull Long id, Tecnico datos) {
         Tecnico existente = obtenerPorId(id);
         existente.setNombre(datos.getNombre());
         existente.setEspecialidad(datos.getEspecialidad());
@@ -43,7 +47,7 @@ public class TecnicoServiceImpl implements TecnicoService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(@NonNull Long id) {
         if (!tecnicoRepository.existsById(id))
             throw new RecursoNoEncontradoException("Técnico no encontrado con ID: " + id);
         tecnicoRepository.deleteById(id);

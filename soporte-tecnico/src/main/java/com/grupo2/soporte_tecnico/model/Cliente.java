@@ -1,11 +1,19 @@
 package com.grupo2.soporte_tecnico.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Cliente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "El nombre no puede estar vacío")
@@ -17,7 +25,7 @@ public class Cliente {
     private String email;
 
     @NotBlank(message = "El teléfono no puede estar vacío")
-    @Size(min = 7, max = 15, message = "El teléfono debe tener entre 7 y 15 caracteres")
+    @Pattern(regexp = "^[0-9]{7,15}$", message = "El teléfono solo debe contener números (entre 7 y 15 dígitos)")
     private String telefono;
 
     @NotBlank(message = "La empresa no puede estar vacía")

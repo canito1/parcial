@@ -1,12 +1,22 @@
 package com.grupo2.soporte_tecnico.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+@Entity
 public class Solicitud {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "El título no puede estar vacío")
@@ -22,9 +32,14 @@ public class Solicitud {
 
     private Long tecnicoId;
 
+    @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado;
 
     @NotBlank(message = "La prioridad no puede estar vacía")
+    @Pattern(
+        regexp = "^(Alta|Media|Baja)$",
+        message = "La prioridad debe ser: Alta, Media o Baja"
+    )
     private String prioridad;
 
     private LocalDateTime fechaCreacion;
@@ -32,6 +47,7 @@ public class Solicitud {
 
     public Solicitud() {
         this.estado             = EstadoSolicitud.PENDIENTE;
+        this.prioridad          = "Baja";
         this.fechaCreacion      = LocalDateTime.now();
         this.fechaActualizacion = LocalDateTime.now();
     }

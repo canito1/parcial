@@ -5,6 +5,7 @@ import com.grupo2.soporte_tecnico.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.lang.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Obtener cliente por ID")
-    public ResponseEntity<Cliente> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<Cliente> obtenerPorId(@PathVariable @NonNull Long id) {
         return ResponseEntity.ok(clienteService.obtenerPorId(id));
     }
 
@@ -41,14 +42,14 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar cliente")
-    public ResponseEntity<Cliente> actualizar(@PathVariable Long id,
+    public ResponseEntity<Cliente> actualizar(@PathVariable @NonNull Long id,
                                                @Valid @RequestBody Cliente cliente) {
         return ResponseEntity.ok(clienteService.actualizar(id, cliente));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar cliente")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable @NonNull Long id) {
         clienteService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

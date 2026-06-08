@@ -4,6 +4,7 @@ import com.grupo2.soporte_tecnico.exception.RecursoNoEncontradoException;
 import com.grupo2.soporte_tecnico.model.Cliente;
 import com.grupo2.soporte_tecnico.repository.ClienteRepository;
 import com.grupo2.soporte_tecnico.service.ClienteService;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -16,10 +17,11 @@ public class ClienteServiceImpl implements ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    @Override public List<Cliente> listarTodos()        { return clienteRepository.findAll(); }
+    @Override
+    public List<Cliente> listarTodos() { return clienteRepository.findAll(); }
 
     @Override
-    public Cliente obtenerPorId(Long id) {
+    public Cliente obtenerPorId(@NonNull Long id) {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "Cliente no encontrado con ID: " + id));
@@ -32,7 +34,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente actualizar(Long id, Cliente datos) {
+    public Cliente actualizar(@NonNull Long id, Cliente datos) {
         Cliente existente = obtenerPorId(id);
         existente.setNombre(datos.getNombre());
         existente.setEmail(datos.getEmail());
@@ -42,7 +44,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(@NonNull Long id) {
         if (!clienteRepository.existsById(id))
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID: " + id);
         clienteRepository.deleteById(id);

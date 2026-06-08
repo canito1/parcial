@@ -1,9 +1,11 @@
 package com.grupo2.soporte_tecnico.service.impl;
 
 import com.grupo2.soporte_tecnico.exception.RecursoNoEncontradoException;
+import com.grupo2.soporte_tecnico.model.EstadoSolicitud;
 import com.grupo2.soporte_tecnico.model.Solicitud;
 import com.grupo2.soporte_tecnico.repository.SolicitudRepository;
 import com.grupo2.soporte_tecnico.service.SolicitudService;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,12 +19,21 @@ public class SolicitudServiceImpl implements SolicitudService {
         this.solicitudRepository = solicitudRepository;
     }
 
-    @Override public List<Solicitud> listarTodas()              { return solicitudRepository.findAll(); }
-    @Override public List<Solicitud> listarPorCliente(Long id)  { return solicitudRepository.findByClienteId(id); }
-    @Override public List<Solicitud> listarPorEstado(String e)  { return solicitudRepository.findByEstado(e); }
+    @Override
+    public List<Solicitud> listarTodas() { return solicitudRepository.findAll(); }
 
     @Override
-    public Solicitud obtenerPorId(Long id) {
+    public List<Solicitud> listarPorCliente(@NonNull Long id) {
+        return solicitudRepository.findByClienteId(id);
+    }
+
+    @Override
+    public List<Solicitud> listarPorEstado(EstadoSolicitud estado) {
+        return solicitudRepository.findByEstado(estado);
+    }
+
+    @Override
+    public Solicitud obtenerPorId(@NonNull Long id) {
         return solicitudRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "Solicitud no encontrada con ID: " + id));
@@ -37,7 +48,7 @@ public class SolicitudServiceImpl implements SolicitudService {
     }
 
     @Override
-    public Solicitud actualizar(Long id, Solicitud datos) {
+    public Solicitud actualizar(@NonNull Long id, Solicitud datos) {
         Solicitud existente = obtenerPorId(id);
         existente.setTitulo(datos.getTitulo());
         existente.setDescripcion(datos.getDescripcion());
@@ -49,7 +60,7 @@ public class SolicitudServiceImpl implements SolicitudService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(@NonNull Long id) {
         if (!solicitudRepository.existsById(id))
             throw new RecursoNoEncontradoException("Solicitud no encontrada con ID: " + id);
         solicitudRepository.deleteById(id);

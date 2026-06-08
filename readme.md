@@ -18,31 +18,36 @@ Esta API RESTful está diseñada para registrar, consultar, actualizar y elimina
 
 - `com.example.support.controller`
 - `com.example.support.service`
+- `com.example.support.repository`
 - `com.example.support.model`
 - `com.example.support.exception`
 
 ## Modelos principales
 
-### Solicitud
+### Solicitudes
 - `id`: Long
 - `titulo`: String
 - `descripcion`: String
 - `clienteId`: Long
 - `tecnicoId`: Long
 - `estado`: String (por ejemplo: `NUEVA`, `EN_PROGRESO`, `RESUELTA`)
+- `prioridad`: Alta
 - `fechaCreacion`: LocalDateTime
 - `fechaActualizacion`: LocalDateTime
 
-### Cliente
+### Clientes
 - `id`: Long
 - `nombre`: String
 - `email`: String
 - `telefono`: String
+- `empresa`: String
 
 ### Tecnico
 - `id`: Long
 - `nombre`: String
 - `especialidad`: String
+- `turno`: String
+- `disponible`: true
 
 ## Endpoints CRUD sugeridos
 
@@ -107,8 +112,12 @@ Esta API RESTful está diseñada para registrar, consultar, actualizar y elimina
 > Este repositorio actualmente contiene solo documentación. Para ejecutar la API debes crear el proyecto Spring Boot en un subdirectorio o importar un proyecto existente.
 
 1. Abrir el proyecto en VS Code o IntelliJ.
-2. Ejecutar la aplicación con `mvn spring-boot:run` o desde la clase principal.
+2. Ejecutar la aplicación con `mvnw spring-boot:run` o desde la clase principal.
 3. Enviar solicitudes HTTP a los endpoints definidos.
+
+## Acceso a la aplicación
+
+- Swagger UI: http://localhost:8080/swagger-ui.html
 
 ## Pruebas funcionales
 
@@ -116,4 +125,4 @@ Esta API RESTful está diseñada para registrar, consultar, actualizar y elimina
 
 ## Notas finales
 
-Esta API debe funcionar en memoria durante la ejecución, sin conexión a una base de datos real. El almacenamiento puede ser simulado con `List` o `Map` en los servicios para mantener la información temporal mientras la aplicación está activa.
+Esta API debe funcionar en memoria durante la ejecución, sin conexión a una base de datos real.

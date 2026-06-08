@@ -49,8 +49,9 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar cliente")
-    public ResponseEntity<Void> eliminar(@PathVariable @NonNull Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable @NonNull Long id) {
         clienteService.eliminar(id);
-        return ResponseEntity.noContent().build();
+        // Cambiamos noContent() por ok() y pasamos el mensaje personalizado
+        return ResponseEntity.ok("Cliente eliminado: " + id);
     }
 }
